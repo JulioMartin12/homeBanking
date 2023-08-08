@@ -1,11 +1,9 @@
 package com.mindhub.homebanking.models;
 
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -27,6 +25,13 @@ public class Account {
         this.balance = balance;
     }
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="client_id")
+    private Client client;
+
+    public long getId() {
+        return id;
+    }
 
     public String getNumber() {
         return number;
@@ -51,6 +56,13 @@ public class Account {
     public void setBalance(double balance) {
         this.balance = balance;
     }
+    @JsonIgnore
+    public Client getClient() {
+        return client;
+    }
 
+    public void setClient(Client client) {
+        this.client = client;
+    }
 }
 
