@@ -1,4 +1,4 @@
-package dtos;
+package com.mindhub.homebanking.dtos;
 
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
@@ -11,13 +11,12 @@ public class AccountDTO {
     private String number;
     private LocalDate creationData;
     private  double balance;
-    private Client client;
+
     public AccountDTO(Account account) {
         this.id =account.getId();
         this.number=account.getNumber();
         this.balance= account.getBalance();
         this.creationData = account.getCreationData();
-        this.client=account.getClient();
 
     }
 
@@ -37,7 +36,5 @@ public class AccountDTO {
         return balance;
     }
 
-    public Client getClient() {
-        return client;
-    }
+
 }

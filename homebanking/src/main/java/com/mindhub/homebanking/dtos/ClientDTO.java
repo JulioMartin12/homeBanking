@@ -1,10 +1,7 @@
-package dtos;
+package com.mindhub.homebanking.dtos;
 
-import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -16,7 +13,7 @@ public class ClientDTO {
     private String lastName;
     private String email;
 
-    Set<AccountDTO> accounts = new HashSet<>();
+    private Set<AccountDTO> accounts ;
 
     public ClientDTO(Client client) {
         this.id = client.getId();
@@ -40,4 +37,7 @@ public class ClientDTO {
         return email;
     }
 
+    public Set<AccountDTO> getAccounts() {
+        return accounts;
+    }
 }

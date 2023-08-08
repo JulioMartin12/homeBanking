@@ -24,15 +24,27 @@ public class HomebankingApplication {
 	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository){
 		return  (args -> {
 
-			Client client = new Client("Julio", "Martin", "Rl_yoo@yahoo.com.ar");
-			clientRepository.save(client);
-			Account account = new Account("VIN001", LocalDate.now(),5000);
-            accountRepository.save(account);
-
 			Client client1 = new Client("Melba", "Morel", "melba@mindHub.com");
 			clientRepository.save(client1);
+
+			Account account = new Account("VIN001", LocalDate.now(),5000);
+			client1.addAccount(account);
+			accountRepository.save(account);
+
 			Account account1 = new Account("VIN002", LocalDate.now().plusDays(1),7500);
+			client1.addAccount(account1);
 			accountRepository.save(account1);
+
+
+
+
+
+
+			Client client = new Client("Julio", "Martin", "Rl_yoo@yahoo.com.ar");
+			clientRepository.save(client);
+
+
+
 
 
 
