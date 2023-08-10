@@ -16,16 +16,16 @@ public class Transaction {
     private String description;
     private  double amount;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "acount_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "account_id")
     private  Account account;
     private LocalDateTime date;
 
     public Transaction() {
     }
 
-    public Transaction(Long id, TransactionType type, String description, double amount, LocalDateTime date) {
-        this.id = id;
+    public Transaction( TransactionType type, String description, double amount, LocalDateTime date) {
+
         this.type = type;
         this.description = description;
         this.amount = amount;
@@ -69,7 +69,7 @@ public class Transaction {
     public void setDate(LocalDateTime date) {
         this.date = date;
     }
- @JsonIgnore
+
     public Account getAccount() {
         return account;
     }
