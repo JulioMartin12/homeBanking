@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 public class Account {
@@ -16,6 +17,8 @@ public class Account {
     private LocalDate creationData;
     private  double balance;
 
+    @OneToMany(mappedBy = "Account", fetch = FetchType.EAGER)
+    private Set<Transaction> transactions;
     public Account() {
     }
 
@@ -63,6 +66,19 @@ public class Account {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public Set<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(Set<Transaction> transactions) {
+        this.transactions = transactions;
+    }
+
+
+    public  void addTransaction(Transaction transaction){
+
     }
 }
 
