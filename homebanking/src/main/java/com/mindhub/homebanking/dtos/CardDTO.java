@@ -13,7 +13,7 @@ public class CardDTO {
 
       private  long id;
 
-    private  String cardholder;
+    private  String cardHolder;
 
     private CardType type;
 
@@ -32,7 +32,7 @@ public class CardDTO {
 
     public CardDTO(Card card) {
         this.id = card.getId();
-        this.cardholder = card.getCardHolder();
+        this.cardHolder = card.getCardHolder();
         this.type = card.getType();
         this.color = card.getColor();
         this.number = card.getNumber();
@@ -46,7 +46,7 @@ public class CardDTO {
     }
 
     public String getCardHolder() {
-        return cardholder;
+        return cardHolder;
     }
 
     public CardType getType() {
