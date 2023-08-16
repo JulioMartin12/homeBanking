@@ -1,15 +1,11 @@
 package com.mindhub.homebanking;
 
-import com.mindhub.homebanking.repositories.ClientLoanRepository;
+import com.mindhub.homebanking.repositories.*;
 import com.mindhub.homebanking.models.*;
-import com.mindhub.homebanking.repositories.AccountRepository;
-import com.mindhub.homebanking.repositories.LoanRepository;
-import com.mindhub.homebanking.repositories.TransactionRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import com.mindhub.homebanking.repositories.ClientRepository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -26,7 +22,14 @@ public class HomebankingApplication {
 
 
 	@Bean
-	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository){
+	public CommandLineRunner initData(
+			ClientRepository clientRepository,
+			AccountRepository accountRepository,
+			TransactionRepository transactionRepository,
+			LoanRepository loanRepository,
+			ClientLoanRepository clientLoanRepository,
+			CardRepository cardRepository
+			){
 		return  (args -> {
 
 			// melba and martin are clients
@@ -80,8 +83,8 @@ public class HomebankingApplication {
 			loanRepository.save(automotriz);
 
 
-			ClientLoan clientLoan = new ClientLoan(400000,60,melba,hipotecario);
-			ClientLoan clientLoan2 = new ClientLoan(50000,12,melba,personal);
+			ClientLoan clientLoan = new ClientLoan(400000,60);
+			ClientLoan clientLoan2 = new ClientLoan(50000,12);
 			clientLoanRepository.save(clientLoan);
 			clientLoanRepository.save(clientLoan2);
 			melba.addClientLoan(clientLoan);
@@ -90,8 +93,8 @@ public class HomebankingApplication {
 			personal.addClientLoans(clientLoan2);
 
 
-			ClientLoan clientLoan1 = new ClientLoan(100000,24,martin,personal);
-			ClientLoan clientLoan3 = new ClientLoan(200000,36,martin,automotriz);
+			ClientLoan clientLoan1 = new ClientLoan(100000,24);
+			ClientLoan clientLoan3 = new ClientLoan(200000,36);
 			clientLoanRepository.save(clientLoan1);
 			clientLoanRepository.save(clientLoan3);
 			martin.addClientLoan(clientLoan1);
@@ -99,6 +102,37 @@ public class HomebankingApplication {
 			hipotecario.addClientLoans(clientLoan1);
 			automotriz.addClientLoans(clientLoan3);
 
+			Card cardMelba = new Card(melba.getFirstName()  + " " + melba.getLastName(),
+					CardType.DEBIT,CardColor.GOLD,"1234 4256 3524 7845", 278,
+					LocalDate.now(),LocalDate.now().plusYears(5));
+			melba.addCard(cardMelba);
+			cardRepository.save(cardMelba);
+
+			Card cardMelba3 = new Card(melba.getFirstName()  + " " + melba.getLastName(),
+					CardType.DEBIT,CardColor.SILVER,"9587 6452 1245 3265", 524,
+					LocalDate.now(),LocalDate.now().plusYears(5));
+			melba.addCard(cardMelba3);
+			cardRepository.save(cardMelba3);
+
+			Card cardMelba4 = new Card(melba.getFirstName()  + " " + melba.getLastName(),
+					CardType.CREDIT,CardColor.SILVER,"5824 6549 6524 2125 ", 235,
+					LocalDate.now(),LocalDate.now().plusYears(5));
+			melba.addCard(cardMelba4);
+			cardRepository.save(cardMelba4);
+
+			Card cardMelba2 = new Card(melba.getFirstName()  + " " + melba.getLastName(),
+					CardType.CREDIT,CardColor.TITANIUM,"4256 7845 1234 3524 ", 872,
+					LocalDate.now(),LocalDate.now().plusYears(5));
+			melba.addCard(cardMelba2);
+			cardRepository.save(cardMelba2);
+
+
+
+			Card cardMartin = new Card(martin.getFirstName()  + " " + martin.getLastName(),
+					CardType.CREDIT,CardColor.TITANIUM,"1234 3214 789 987 ", 777,
+					LocalDate.now(),LocalDate.now().plusYears(5));
+			martin.addCard(cardMartin);
+			cardRepository.save(cardMartin);
 
 		});
 	}
