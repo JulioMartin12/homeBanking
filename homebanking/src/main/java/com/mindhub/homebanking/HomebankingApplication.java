@@ -2,10 +2,12 @@ package com.mindhub.homebanking;
 
 import com.mindhub.homebanking.repositories.*;
 import com.mindhub.homebanking.models.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,7 +16,8 @@ import java.util.List;
 
 @SpringBootApplication
 public class HomebankingApplication {
-
+	@Autowired
+ private PasswordEncoder passwordEncoder;
 	public static void main(String[] args) {
 		SpringApplication.run(HomebankingApplication.class, args);
 	}
@@ -32,8 +35,13 @@ public class HomebankingApplication {
 			){
 		return  (args -> {
 
-			// melba and martin are clients
-			Client melba = new Client("Melba", "Morel", "melba@mindHub.com");
+			// melba and martin are clients and admin
+
+		/*	Client admin = new Client("admin", "admin", "admin@gmail.com",passwordEncoder.encode("12345"));
+			clientRepository.save(admin);
+*/
+
+			Client melba = new Client("Melba", "Morel", "melba@mindHub.com", passwordEncoder.encode("12345"), RoleType.CLIENT);
 			clientRepository.save(melba);
 
 			Account account = new Account("VIN001", LocalDate.now(),5000);
@@ -55,7 +63,7 @@ public class HomebankingApplication {
 
 
 
-			Client martin = new Client("Julio", "Martin", "Rl_yoo@yahoo.com.ar");
+			Client martin = new Client("Julio", "Martin", "Rl_yoo@yahoo.com.ar",passwordEncoder.encode("12345"),RoleType.CLIENT);
 			clientRepository.save(martin);
 
 			Account account2 = new Account("VIN003", LocalDate.now(),15000);
@@ -133,6 +141,9 @@ public class HomebankingApplication {
 					LocalDate.now(),LocalDate.now().plusYears(5));
 			martin.addCard(cardMartin);
 			cardRepository.save(cardMartin);
+
+			Client admin = new Client("admin", "admin", "admin@gmail.com",passwordEncoder.encode("12345"),RoleType.ADMIN);
+			clientRepository.save(admin);
 
 		});
 	}
