@@ -31,7 +31,7 @@ public class LoanDTO {
         this.payments = loan.getPayments();
     }
 
-    @JsonIgnore
+
     public Set<ClientLoan> getClients() {
         return clients;
     }

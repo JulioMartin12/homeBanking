@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 public class Client {
@@ -41,6 +42,10 @@ public class Client {
         this.role=role;
     }
 
+
+    public Set<Loan> getClientLoans() {
+        return loans.stream().map(ClientLoan::getLoan).collect(Collectors.toSet());
+    }
     public RoleType getRole() {
         return role;
     }
@@ -65,12 +70,12 @@ public class Client {
         this.cards = cards;
     }
 
-    @JsonIgnore
+
     public Set<ClientLoan> getLoans() {
         return loans;
     }
 
-    public void setClientLoans(Set<ClientLoan> Loans) {
+    public void setClientLoans(Set<ClientLoan> loans) {
         this.loans = loans;
     }
 
@@ -103,21 +108,30 @@ public class Client {
     }
 
     public void addAccount(Account account){
-        account.setClient(this);
         this.accounts.add(account);
+        account.setClient(this);
     }
+
+    public void setAccounts(Set<Account> accounts) {
+        this.accounts = accounts;
+    }
+
+    public void setLoans(Set<ClientLoan> loans) {
+        this.loans = loans;
+    }
+
     public Set<Account> getAccounts() {
         return accounts;
     }
 
     public void addClientLoan(ClientLoan clientLoan){
-        clientLoan.setClient(this);
         this.loans.add(clientLoan);
+        clientLoan.setClient(this);
     }
 
     public  void addCard(Card card){
-        card.setClient(this);
-        this.cards.add(card);
+       this.cards.add(card);
+       card.setClient(this);
 
     }
 

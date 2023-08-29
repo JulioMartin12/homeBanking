@@ -22,13 +22,16 @@ public class WebAuthorization    {
 @Bean
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/web/index.html","/web/img/**","/web/css/**","/web/js/index.js").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/clients").permitAll()
-                .antMatchers("/rest/**").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.GET, "/api/clients/current","/api/accounts/**","/web/**")
-                     .hasAnyAuthority("CLIENT","ADMIN")
-                .antMatchers("/api/**").hasAuthority("ADMIN");
 
+                .antMatchers("/web/index.html", "/web/img/*", "/web/css/*", "/web/js/index.js").permitAll()
+               // .antMatchers(HttpMethod.GET, "/api/clients").permitAll() //borrar de prueba
+                .antMatchers(HttpMethod.POST, "/api/clients").permitAll() // Permitir a todos crear un nuevo cliente
+                .antMatchers("/rest/**").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/clients/current", "/api/accounts/*", "/web/**").hasAnyAuthority("CLIENT", "ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/clients").hasAuthority("ADMIN") // Restringir acceso a /api/clients solo para usuarios con rol "ADMIN"
+                .antMatchers("/api/**").hasAuthority("ADMIN")
+                .antMatchers("/h2-console/**").hasAuthority("ADMIN")
+                .anyRequest().denyAll();
 
         http.formLogin()
                 .usernameParameter("email")

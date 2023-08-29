@@ -105,10 +105,10 @@ public class HomebankingApplication {
 			ClientLoan clientLoan3 = new ClientLoan(200000,36);
 			clientLoanRepository.save(clientLoan1);
 			clientLoanRepository.save(clientLoan3);
-			martin.addClientLoan(clientLoan1);
-			martin.addClientLoan(clientLoan3);
-			hipotecario.addClientLoans(clientLoan1);
+			/*hipotecario.addClientLoans(clientLoan1);
 			automotriz.addClientLoans(clientLoan3);
+			martin.addClientLoan(clientLoan1);
+			martin.addClientLoan(clientLoan3);*/
 
 			Card cardMelba = new Card(melba.getFirstName()  + " " + melba.getLastName(),
 					CardType.DEBIT,CardColor.GOLD,"1234 4256 3524 7845", 278,

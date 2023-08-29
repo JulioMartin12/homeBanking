@@ -34,18 +34,19 @@ private Set<ClientLoan> clients = new HashSet<>();
         this.payments = payments;
     }
 
-    @JsonIgnore
+
+
     public Set<ClientLoan> getClients() {
         return clients;
     }
 
     public void setClient(Set<ClientLoan> clientLoans) {
-        this.clients= clients;
+        this.clients= clientLoans;
     }
 
     public void addClientLoans(ClientLoan clientLoan){
-        clientLoan.setLoan(this);
         this.clients.add(clientLoan);
+        clientLoan.setLoan(this);
     }
 
     public long getId() {

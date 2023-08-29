@@ -1,5 +1,6 @@
 package com.mindhub.homebanking.controllers;
 
+import com.mindhub.homebanking.dtos.AccountDTO;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.models.RoleType;
 import com.mindhub.homebanking.repositories.ClientRepository;
@@ -23,7 +24,7 @@ public class ClientController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @RequestMapping(value = "/clients")
+    @RequestMapping(value = "/clients" , method = RequestMethod.GET)
     public List<ClientDTO> getClients(){
   List<ClientDTO> clients;
   clients = this.clientRepository.findAll().stream().map(ClientDTO::new).collect(Collectors.toList());
@@ -34,10 +35,22 @@ public class ClientController {
 
     @RequestMapping("/clients/{id}")
     public ResponseEntity<ClientDTO> getclient(@PathVariable Long id){
-        return clientRepository.findById(id)
+        return  clientRepository.findById(id)
                 .map(ClientDTO::new)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+
+
+
+    }
+
+    @GetMapping("/clients/{clientId}/accounts")
+    public List<AccountDTO> getClientAccounts(@PathVariable Long clientId) {
+        return clientRepository.findById(clientId)
+                .map(client -> client.getAccounts().stream()
+                        .map(account -> new AccountDTO(account))
+                        .collect(Collectors.toList()))
+                .orElse(null);  // Si no se encuentra el cliente, retorna null
     }
 
     @RequestMapping(path = "/clients", method = RequestMethod.POST)

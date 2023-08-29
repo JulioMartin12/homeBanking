@@ -31,6 +31,9 @@ public class ClientLoan {
 
     }
 
+
+
+
     public long getId() {
         return Id;
     }
@@ -40,7 +43,7 @@ public class ClientLoan {
     }
 
     public void setAmount(double amount) {
-        amount = amount;
+        this.amount = amount;
     }
 
     public int getPayments() {
@@ -48,7 +51,7 @@ public class ClientLoan {
     }
 
     public void setPayments(int payments) {
-        payments = payments;
+        this.payments = payments;
     }
 
     public Client getClient() {

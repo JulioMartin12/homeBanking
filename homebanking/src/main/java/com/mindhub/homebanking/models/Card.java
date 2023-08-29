@@ -103,7 +103,7 @@ public class Card {
         this.fromDate = fromDate;
     }
 
-    @JsonIgnore
+
     public Client getClient() {
         return client;
     }
