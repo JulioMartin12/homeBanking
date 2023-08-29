@@ -93,22 +93,22 @@ public class HomebankingApplication {
 
 			ClientLoan clientLoan = new ClientLoan(400000,60);
 			ClientLoan clientLoan2 = new ClientLoan(50000,12);
-			clientLoanRepository.save(clientLoan);
-			clientLoanRepository.save(clientLoan2);
+
 			melba.addClientLoan(clientLoan);
 			melba.addClientLoan(clientLoan2);
 			hipotecario.addClientLoans(clientLoan);
 			personal.addClientLoans(clientLoan2);
-
+			clientLoanRepository.save(clientLoan);
+			clientLoanRepository.save(clientLoan2);
 
 			ClientLoan clientLoan1 = new ClientLoan(100000,24);
 			ClientLoan clientLoan3 = new ClientLoan(200000,36);
-			clientLoanRepository.save(clientLoan1);
-			clientLoanRepository.save(clientLoan3);
-			/*hipotecario.addClientLoans(clientLoan1);
+			hipotecario.addClientLoans(clientLoan1);
 			automotriz.addClientLoans(clientLoan3);
 			martin.addClientLoan(clientLoan1);
-			martin.addClientLoan(clientLoan3);*/
+			martin.addClientLoan(clientLoan3);
+			clientLoanRepository.save(clientLoan1);
+			clientLoanRepository.save(clientLoan3);
 
 			Card cardMelba = new Card(melba.getFirstName()  + " " + melba.getLastName(),
 					CardType.DEBIT,CardColor.GOLD,"1234 4256 3524 7845", 278,

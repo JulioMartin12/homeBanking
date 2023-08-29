@@ -23,7 +23,6 @@ public class Transaction {
 
     public Transaction() {
     }
-
     public Transaction( TransactionType type, String description, double amount, LocalDateTime date) {
 
         this.type = type;
@@ -35,8 +34,6 @@ public class Transaction {
     public Long getId() {
         return id;
     }
-
-
 
     public TransactionType getType() {
         return type;

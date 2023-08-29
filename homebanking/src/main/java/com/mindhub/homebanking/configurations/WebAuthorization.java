@@ -30,7 +30,7 @@ public class WebAuthorization    {
                 .antMatchers(HttpMethod.GET, "/api/clients/current", "/api/accounts/*", "/web/**").hasAnyAuthority("CLIENT", "ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/clients").hasAuthority("ADMIN") // Restringir acceso a /api/clients solo para usuarios con rol "ADMIN"
                 .antMatchers("/api/**").hasAuthority("ADMIN")
-                .antMatchers("/h2-console/**").hasAuthority("ADMIN")
+                .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().denyAll();
 
         http.formLogin()

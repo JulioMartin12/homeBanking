@@ -30,7 +30,6 @@ public class Client {
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private  Set<Card> cards = new HashSet<>();
 
-
     public Client() {
     }
 
@@ -42,10 +41,10 @@ public class Client {
         this.role=role;
     }
 
-
     public Set<Loan> getClientLoans() {
         return loans.stream().map(ClientLoan::getLoan).collect(Collectors.toSet());
     }
+
     public RoleType getRole() {
         return role;
     }
@@ -69,7 +68,6 @@ public class Client {
     public void setCards(Set<Card> cards) {
         this.cards = cards;
     }
-
 
     public Set<ClientLoan> getLoans() {
         return loans;
@@ -107,11 +105,6 @@ public class Client {
         this.email = email;
     }
 
-    public void addAccount(Account account){
-        this.accounts.add(account);
-        account.setClient(this);
-    }
-
     public void setAccounts(Set<Account> accounts) {
         this.accounts = accounts;
     }
@@ -123,6 +116,10 @@ public class Client {
     public Set<Account> getAccounts() {
         return accounts;
     }
+    public void addAccount(Account account){
+        this.accounts.add(account);
+        account.setClient(this);
+    }
 
     public void addClientLoan(ClientLoan clientLoan){
         this.loans.add(clientLoan);
@@ -132,8 +129,6 @@ public class Client {
     public  void addCard(Card card){
        this.cards.add(card);
        card.setClient(this);
-
     }
-
 
 }

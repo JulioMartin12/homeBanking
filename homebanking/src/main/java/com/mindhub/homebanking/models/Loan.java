@@ -34,8 +34,6 @@ private Set<ClientLoan> clients = new HashSet<>();
         this.payments = payments;
     }
 
-
-
     public Set<ClientLoan> getClients() {
         return clients;
     }

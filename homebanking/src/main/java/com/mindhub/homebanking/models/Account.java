@@ -33,7 +33,6 @@ public class Account {
         this.balance = balance;
     }
 
-
     public long getId() {
         return id;
     }
@@ -77,7 +76,6 @@ public class Account {
     public void setTransactions(Set<Transaction> transactions) {
         this.transactions = transactions;
     }
-
 
     public  void addTransaction(Transaction transaction){
            transaction.setAccount(this);

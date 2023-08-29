@@ -23,8 +23,11 @@ public class Card {
     private String number;
 
     private int cvv;
+
     private LocalDate thruDate;
+
     private  LocalDate fromDate;
+
 @ManyToOne(fetch = FetchType.EAGER)
 @JoinColumn(name = "client_id")
     private  Client client;
@@ -41,7 +44,6 @@ public class Card {
         this.thruDate = thruDate;
         this.fromDate = fromDate;
     }
-
 
     public long getId() {
         return id;
@@ -102,7 +104,6 @@ public class Card {
     public void setFromDate(LocalDate fromDate) {
         this.fromDate = fromDate;
     }
-
 
     public Client getClient() {
         return client;
