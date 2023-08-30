@@ -22,6 +22,8 @@ public class ClientDTO {
 
     private  Set<CardDTO> cards;
 
+    private String password;
+
     public ClientDTO(Client client) {
         this.id = client.getId();
         this.firstName = client.getFirstName();
@@ -31,6 +33,7 @@ public class ClientDTO {
         this.loans= client.getLoans().stream().map(ClientLoanDTO::new).collect(Collectors.toSet());
         this.cards= client.getCards().stream().map(CardDTO::new).collect(Collectors.toSet());
         this.role=client.getRole();
+        this.password= client.getPassword();
     }
 
     public long getId() {
@@ -58,6 +61,9 @@ public class ClientDTO {
         return lastName;
     }
 
+    public String getPassword() {
+        return password;
+    }
 
     public String getEmail() {
         return email;

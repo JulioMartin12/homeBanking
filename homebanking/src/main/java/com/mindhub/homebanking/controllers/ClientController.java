@@ -1,6 +1,7 @@
 package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.dtos.AccountDTO;
+import com.mindhub.homebanking.dtos.ClientRequestDTO;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.models.RoleType;
@@ -39,7 +40,7 @@ public class ClientController {
 
     }
 
-    @RequestMapping("/clients/{id}")
+    @GetMapping("/clients/{id}")
     public ResponseEntity<ClientDTO> getclient(@PathVariable Long id){
         return  clientRepository.findById(id)
                 .map(ClientDTO::new)
@@ -59,44 +60,41 @@ public class ClientController {
                 .orElse(null);  // Si no se encuentra el cliente, retorna null
     }
 
-    @RequestMapping(path = "/clients", method = RequestMethod.POST)
-    public ResponseEntity<Object> register(
+    @PostMapping(path = "/clients")
+    public ResponseEntity<Object> register(@RequestBody ClientRequestDTO clientRequestDTO) {
 
-            @RequestParam String firstName, @RequestParam String lastName,
-            @RequestParam String email, @RequestParam String password) {
-
-        if (firstName.isEmpty()) {
+        if (clientRequestDTO.getFirstName().isEmpty()) {
 
             return new ResponseEntity<>("Missing data in firstName", HttpStatus.FORBIDDEN);
             //"Missing data", HttpStatus.FORBIDDEN
         }
-        if ( lastName.isEmpty()) {
+        if ( clientRequestDTO.getLastName().isEmpty()) {
 
             return new ResponseEntity<>("Missing data in lastName", HttpStatus.FORBIDDEN);
             //"Missing data", HttpStatus.FORBIDDEN
         }
-        if ( email.isEmpty() ) {
+        if ( clientRequestDTO.getEmail().isEmpty() ) {
 
             return new ResponseEntity<>("Missing data in email", HttpStatus.FORBIDDEN);
             //"Missing data", HttpStatus.FORBIDDEN
         }
-        if ( password.isEmpty()) {
+        if ( clientRequestDTO.getPassword().isEmpty()) {
 
             return new ResponseEntity<>("Missing data in password", HttpStatus.FORBIDDEN);
             //"Missing data", HttpStatus.FORBIDDEN
         }
 
-        if (clientRepository.findByEmail(email) !=  null) {
+        if (clientRepository.findByEmail(clientRequestDTO.getEmail()) !=  null) {
 
             return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
         }
 
-        Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password), RoleType.CLIENT);
+        Client client = new Client(clientRequestDTO.getFirstName(), clientRequestDTO.getLastName(), clientRequestDTO.getEmail(), passwordEncoder.encode(clientRequestDTO.getPassword()), RoleType.CLIENT);
         clientRepository.save( client);
         Account account = new Account("VIN-"+ Utils.randomNumber(999999999), LocalDate.now(),0);
         client.addAccount(account);
         accountRepository.save(account);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(client, HttpStatus.CREATED);
 
     }
 

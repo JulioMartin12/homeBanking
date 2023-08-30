@@ -28,7 +28,7 @@ public class AccountController {
     @Autowired
     private AccountRepository accountRepository;
 
-    @RequestMapping(value = "/accounts")
+    @GetMapping(value = "/accounts")
     public List<AccountDTO> getAccounts(){
         List<AccountDTO> accounts;
         accounts = this.accountRepository.findAll().stream().map(AccountDTO::new).collect(Collectors.toList());
@@ -37,7 +37,7 @@ public class AccountController {
 
     }
 
-    @RequestMapping("/accounts/{id}")
+    @GetMapping("/accounts/{id}")
     public ResponseEntity<AccountDTO> getAccounts(@PathVariable Long id){
         return accountRepository.findById(id)
                 .map(AccountDTO::new)
@@ -45,7 +45,7 @@ public class AccountController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @RequestMapping(value = "/clients/current/accounts" , method = RequestMethod.POST)
+    @PostMapping(value = "/clients/current/accounts" )
     public ResponseEntity<Object> getCurrentClient(Authentication authentication){
         String email = authentication.getName();
         Client client = clientRepository.findByEmail(email);
