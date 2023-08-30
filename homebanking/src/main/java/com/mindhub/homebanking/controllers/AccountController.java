@@ -4,14 +4,18 @@ import com.mindhub.homebanking.dtos.AccountDTO;
 import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.dtos.TransactionDTO;
 import com.mindhub.homebanking.models.Account;
+import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.models.Transaction;
 import com.mindhub.homebanking.repositories.AccountRepository;
+import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.services.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +23,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/api")
 public class AccountController {
 
+    @Autowired
+    private ClientRepository clientRepository;
     @Autowired
     private AccountRepository accountRepository;
 
@@ -39,8 +45,19 @@ public class AccountController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @RequestMapping(value = "/clients/current/accounts" , method = RequestMethod.POST)
+    public ResponseEntity<Object> getCurrentClient(Authentication authentication){
+        String email = authentication.getName();
+        Client client = clientRepository.findByEmail(email);
 
+        if(client.getAccounts().size() > 2){
+           return new ResponseEntity<>("Max only 3 accounts ", HttpStatus.FORBIDDEN);
+        }
+        Account account = new Account("VIN-"+ Utils.randomNumber(99999999), LocalDate.now(),0);
+        client.addAccount(account);
+        accountRepository.save(account);
+        return   new ResponseEntity<>("Max only 3 accounts ", HttpStatus.CREATED);
 
-
+    }
 
 }

@@ -2,6 +2,7 @@ package com.mindhub.homebanking;
 
 import com.mindhub.homebanking.repositories.*;
 import com.mindhub.homebanking.models.*;
+import com.mindhub.homebanking.services.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -44,14 +45,14 @@ public class HomebankingApplication {
 			Client melba = new Client("Melba", "Morel", "melba@mindHub.com", passwordEncoder.encode("12345"), RoleType.CLIENT);
 			clientRepository.save(melba);
 
-			Account account = new Account("VIN001", LocalDate.now(),5000);
+			Account account = new Account("VIN-"+ Utils.randomNumber(99999999), LocalDate.now(),5000);
 			melba.addAccount(account);
 			accountRepository.save(account);
 			Transaction transaction = new Transaction(TransactionType.CREDIT,"Sueldo",5000, LocalDateTime.now());
             account.addTransaction(transaction);
 			transactionRepository.save(transaction);
 
-			Account account1 = new Account("VIN002", LocalDate.now().plusDays(1),7500);
+			Account account1 = new Account("VIN-"+ Utils.randomNumber(99999999), LocalDate.now().plusDays(1),7500);
 			melba.addAccount(account1);
 			accountRepository.save(account1);
 			Transaction transaction1 = new Transaction(TransactionType.DEBIT,"Pago la Luz",2100, LocalDateTime.now());
@@ -66,14 +67,14 @@ public class HomebankingApplication {
 			Client martin = new Client("Julio", "Martin", "Rl_yoo@yahoo.com.ar",passwordEncoder.encode("12345"),RoleType.CLIENT);
 			clientRepository.save(martin);
 
-			Account account2 = new Account("VIN003", LocalDate.now(),15000);
+			Account account2 = new Account("VIN-"+ Utils.randomNumber(99999999), LocalDate.now(),15000);
 			martin.addAccount(account2);
 			accountRepository.save(account2);
 			Transaction transaction2 = new Transaction(TransactionType.CREDIT,"Venta de Auto",30000, LocalDateTime.now());
 			account2.addTransaction(transaction2);
 			transactionRepository.save(transaction2);
 
-			Account account3 = new Account("VIN004",LocalDate.now().plusDays(3),23000);
+			Account account3 = new Account("VIN-"+ Utils.randomNumber(99999999),LocalDate.now().plusDays(3),23000);
 			martin.addAccount(account3);
 			accountRepository.save(account3);
 			Transaction transaction3 = new Transaction(TransactionType.DEBIT,"Pago Alquiler",1000, LocalDateTime.now());
@@ -144,6 +145,11 @@ public class HomebankingApplication {
 
 			Client admin = new Client("admin", "admin", "admin@gmail.com",passwordEncoder.encode("12345"),RoleType.ADMIN);
 			clientRepository.save(admin);
+
+
+		/*	Client Josesito = new Client("Josesito", "Lopez", "Jose@yahoo.com.ar",passwordEncoder.encode("12345"),RoleType.CLIENT);
+			clientRepository.save(martin);*/
+
 
 		});
 	}

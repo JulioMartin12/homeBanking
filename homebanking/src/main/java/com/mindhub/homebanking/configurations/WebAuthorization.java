@@ -28,9 +28,12 @@ public class WebAuthorization    {
                 .antMatchers(HttpMethod.POST, "/api/clients").permitAll() // Permitir a todos crear un nuevo cliente
                 .antMatchers("/rest/**").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.GET, "/api/clients/current", "/api/accounts/*", "/web/**").hasAnyAuthority("CLIENT", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/clients/current/accounts", "/api/accounts/*", "/web/**").hasAnyAuthority("CLIENT", "ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/clients/current/cards", "/api/cards/*", "/web/**").hasAnyAuthority("CLIENT", "ADMIN")
+
                 .antMatchers(HttpMethod.GET, "/api/clients").hasAuthority("ADMIN") // Restringir acceso a /api/clients solo para usuarios con rol "ADMIN"
                 .antMatchers("/api/**").hasAuthority("ADMIN")
-                .antMatchers("/h2-console/**").permitAll()
+                .antMatchers("/h2-console/**").hasAuthority("ADMIN")
                 .anyRequest().denyAll();
 
         http.formLogin()
