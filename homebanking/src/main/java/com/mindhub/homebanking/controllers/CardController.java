@@ -3,7 +3,7 @@ package com.mindhub.homebanking.controllers;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.CardRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
-import com.mindhub.homebanking.services.Utils;
+import com.mindhub.homebanking.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,12 +25,12 @@ public class CardController {
         String email = authentication.getName();
         Client client = clientRepository.findByEmail(email);
 
-        if (Utils.ExistTypeCards(client.getCards(),cardColor,cardType)) {
+        if (Util.existTypeCards(client.getCards(),cardColor,cardType)) {
             return new ResponseEntity<>("You have " + cardColor + " " + cardType , HttpStatus.FORBIDDEN);
         }
 
-        String cardNumber = Utils.randomNumber(9999)+ " " + Utils.randomNumber(9999)+ " " + Utils.randomNumber(9999)+ " " + Utils.randomNumber(9999);
-        Card card = new Card(client.getFirstName() + " " + client.getLastName(),cardType,cardColor,cardNumber,Utils.randomNumber(999),LocalDate.now() , LocalDate.now().plusYears(5));
+        String cardNumber = Util.randomNumber(9999)+ " " + Util.randomNumber(9999)+ " " + Util.randomNumber(9999)+ " " + Util.randomNumber(9999);
+        Card card = new Card(client.getFirstName() + " " + client.getLastName(),cardType,cardColor,cardNumber, Util.randomNumber(999),LocalDate.now() , LocalDate.now().plusYears(5));
         client.addCard(card);
         cardRepository.save(card);
         return new ResponseEntity<>("Card Created ", HttpStatus.CREATED);

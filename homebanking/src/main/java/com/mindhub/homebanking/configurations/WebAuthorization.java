@@ -22,18 +22,13 @@ public class WebAuthorization    {
 @Bean
     protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .antMatchers(HttpMethod.POST,"/api/clients").permitAll()
+                .antMatchers("/web/login.html","/web/css/**","/web/index.html","/web/js/**","/web/ccs/style.css","/web/js/index.js","/web/img/**","/web/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/clients/current", "/api/accounts/**","/api/loans","/api/clients/current/accounts","/api/clients/current", "/api/accounts/*","/api/loans","/api/cards/current", "/api/transactions","/api/clients/current/cards").hasAnyAuthority("CLIENT","ADMIN")
+                .antMatchers(HttpMethod.POST,"/api/clients/current/cards","/api/clients/current/accounts","/api/clients/current/transactions","/api/transactions").hasAnyAuthority("CLIENT","ADMIN")
+                .antMatchers("/h2-console/**", "/rest/**","/api/clients").hasAuthority("ADMIN")
+                //.antMatchers("/web/**").hasAnyAuthority("ADMIN","CLIENT")
 
-                .antMatchers("/web/index.html", "/web/img/*", "/web/css/*", "/web/js/index.js").permitAll()
-               // .antMatchers(HttpMethod.GET, "/api/clients").permitAll() //borrar de prueba
-                .antMatchers(HttpMethod.POST, "/api/clients").permitAll() // Permitir a todos crear un nuevo cliente
-                .antMatchers("/rest/**").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.GET, "/api/clients/current", "/api/accounts/*", "/web/**").hasAnyAuthority("CLIENT", "ADMIN")
-                .antMatchers(HttpMethod.POST, "/api/clients/current/accounts", "/api/accounts/*", "/web/**").hasAnyAuthority("CLIENT", "ADMIN")
-                .antMatchers(HttpMethod.POST, "/api/clients/current/cards", "/api/cards/*", "/web/**").hasAnyAuthority("CLIENT", "ADMIN")
-
-                .antMatchers(HttpMethod.GET, "/api/clients").hasAuthority("ADMIN") // Restringir acceso a /api/clients solo para usuarios con rol "ADMIN"
-                .antMatchers("/api/**").hasAuthority("ADMIN")
-                .antMatchers("/h2-console/**").hasAuthority("ADMIN")
                 .anyRequest().denyAll();
 
         http.formLogin()

@@ -8,7 +8,7 @@ import com.mindhub.homebanking.models.RoleType;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.dtos.ClientDTO;
-import com.mindhub.homebanking.services.Utils;
+import com.mindhub.homebanking.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -91,7 +91,7 @@ public class ClientController {
 
         Client client = new Client(clientRequestDTO.getFirstName(), clientRequestDTO.getLastName(), clientRequestDTO.getEmail(), passwordEncoder.encode(clientRequestDTO.getPassword()), RoleType.CLIENT);
         clientRepository.save( client);
-        Account account = new Account("VIN-"+ Utils.randomNumber(999999999), LocalDate.now(),0);
+        Account account = new Account("VIN-"+ Util.randomNumber(999999999), LocalDate.now(),0);
         client.addAccount(account);
         accountRepository.save(account);
         return new ResponseEntity<>(client, HttpStatus.CREATED);
