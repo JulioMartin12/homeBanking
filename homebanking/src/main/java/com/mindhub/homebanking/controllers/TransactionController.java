@@ -4,9 +4,9 @@ import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.models.Transaction;
 import com.mindhub.homebanking.models.TransactionType;
-import com.mindhub.homebanking.repositories.AccountRepository;
-import com.mindhub.homebanking.repositories.ClientRepository;
-import com.mindhub.homebanking.repositories.TransactionRepository;
+import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.services.ClientService;
+import com.mindhub.homebanking.services.TransactionService;
 import com.mindhub.homebanking.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,16 +21,11 @@ import java.time.LocalDateTime;
 @RequestMapping("/api")
 public class TransactionController {
     @Autowired
-   private TransactionRepository transactionRepository;
+   private TransactionService transactionService;
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
     @Autowired
-    private AccountRepository accountRepository;
-
-
-
-
-
+    private AccountService accountService;
     @Transactional
     @PostMapping(value ="/transactions" )
     public ResponseEntity<Object> getCurrentClientTransaction(
@@ -39,7 +34,7 @@ public class TransactionController {
             @RequestParam String description
     ){
         String email = authentication.getName();
-        Client client = clientRepository.findByEmail(email);
+        Client client = this.clientService.findByEmail(email);
         if (amount.isNaN()) {
 
             return new ResponseEntity<>("Missing data in amount", HttpStatus.FORBIDDEN);
@@ -71,12 +66,12 @@ public class TransactionController {
             return new ResponseEntity<>("Equals Accounts ", HttpStatus.FORBIDDEN);
         }
 
-        Account originAccount = accountRepository.findByNumber(fromAccountNumber);
+        Account originAccount = this.accountService.findByNumber(fromAccountNumber);
         if(originAccount == null){
             return new ResponseEntity<>("Not exist origin account", HttpStatus.FORBIDDEN);
         }
 
-        Account destinationAccount = accountRepository.findByNumber(toAccountNumber);
+        Account destinationAccount = this.accountService.findByNumber(toAccountNumber);
         if(destinationAccount == null){
             return new ResponseEntity<>("Not exist destination account", HttpStatus.FORBIDDEN);
         }
@@ -85,28 +80,17 @@ public class TransactionController {
             return new ResponseEntity<>("insufficient balance in your account", HttpStatus.FORBIDDEN);
         }
 
-       /* Account accountOrigin=Utils.updateBalance(client.getAccounts(),toAccountNumber,amount, TransactionType.DEBIT);
-        if(accountOrigin == null){
-            return new ResponseEntity<>("Error in transaction origin account" , HttpStatus.FORBIDDEN);
-        }
-
-         Account accountDestination =Utils.updateBalance(client.getAccounts(),toAccountNumber,amount, TransactionType.CREDIT);
-        if(accountDestination== null){
-            return new ResponseEntity<>("Error in transaction destination account", HttpStatus.FORBIDDEN);
-        }
-*/
-
         Transaction transactionDebit= new Transaction(TransactionType.DEBIT,description,amount*-1, LocalDateTime.now());
         originAccount.setBalance(originAccount.getBalance() - amount);
         originAccount.addTransaction(transactionDebit);
-        transactionRepository.save(transactionDebit);
-        accountRepository.save(originAccount);
+       this.transactionService.saveTransaction(transactionDebit);
+        this.accountService.saveAccount(originAccount);
 
         Transaction transactionCredit= new Transaction(TransactionType.CREDIT,description,amount, LocalDateTime.now());
         destinationAccount.setBalance(destinationAccount.getBalance()+ amount);
         destinationAccount.addTransaction(transactionCredit);
-        transactionRepository.save(transactionCredit);
-        accountRepository.save(destinationAccount);
+        this.transactionService.saveTransaction(transactionCredit);
+        this.accountService.saveAccount(destinationAccount);
          return   new ResponseEntity<>("Ok", HttpStatus.CREATED);
 
     }

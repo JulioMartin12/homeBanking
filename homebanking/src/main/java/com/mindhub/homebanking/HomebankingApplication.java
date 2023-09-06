@@ -81,13 +81,13 @@ public class HomebankingApplication {
 			transactionRepository.save(transaction3);
 
 
-             Loan hipotecario =new Loan("Hipotecario",500.000, new ArrayList<Integer>(List.of(12,24,36,48,60)));
+             Loan hipotecario =new Loan("Hipotecario",500000, new ArrayList<Integer>(List.of(12,24,36,48,60)));
 			 loanRepository.save(hipotecario);
 
-			 Loan personal =new Loan("Personal",100.000, new ArrayList<Integer>(List.of(6,12,24)));
+			 Loan personal =new Loan("Personal",100000, new ArrayList<Integer>(List.of(6,12,24)));
 			loanRepository.save(personal);
 
-			Loan automotriz =new Loan("Automotriz",300.000, new ArrayList<Integer>(List.of(6,12,24,36)));
+			Loan automotriz =new Loan("Automotriz",300000, new ArrayList<Integer>(List.of(6,12,24,36)));
 			loanRepository.save(automotriz);
 
 

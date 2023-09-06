@@ -21,20 +21,18 @@ public class LoanDTO {
     private List<Integer> payments = new ArrayList<>();
 
 
-    private Set<ClientLoan> clients = new HashSet<>();
-    public LoanDTO() {
+   public LoanDTO() {
     }
 
     public LoanDTO(Loan loan) {
+       this.id = loan.getId();
         this.name = loan.getName();
         this.maxAmount = loan.getMaxAmount();
         this.payments = loan.getPayments();
     }
 
 
-    public Set<ClientLoan> getClients() {
-        return clients;
-    }
+
 
     public long getId() {
         return id;
