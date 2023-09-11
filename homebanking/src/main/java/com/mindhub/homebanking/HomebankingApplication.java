@@ -41,7 +41,7 @@ public class HomebankingApplication {
 			clientRepository.save(admin);
 */
 
-			Client melba = new Client("Melba", "Morel", "melba@mindHub.com", passwordEncoder.encode("12345"), RoleType.CLIENT);
+		/*	Client melba = new Client("Melba", "Morel", "melba@mindHub.com", passwordEncoder.encode("12345"), RoleType.CLIENT);
 			clientRepository.save(melba);
 
 			Account account = new Account("VIN001", LocalDate.now(),5000);
@@ -146,10 +146,10 @@ public class HomebankingApplication {
 			clientRepository.save(admin);
 
 
-		/*	Client Josesito = new Client("Josesito", "Lopez", "Jose@yahoo.com.ar",passwordEncoder.encode("12345"),RoleType.CLIENT);
-			clientRepository.save(martin);*/
+		*//*	Client Josesito = new Client("Josesito", "Lopez", "Jose@yahoo.com.ar",passwordEncoder.encode("12345"),RoleType.CLIENT);
+			clientRepository.save(martin);*//*
 
-
+*/
 		});
 	}
 

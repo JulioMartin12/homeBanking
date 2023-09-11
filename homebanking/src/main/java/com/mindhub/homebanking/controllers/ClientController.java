@@ -45,31 +45,35 @@ public class ClientController {
         return this.clientService.getClientAccounts(clientId);
     }
     @PostMapping(path = "/clients")
-    public ResponseEntity<Object> register(@RequestBody ClientRequestDTO clientRequestDTO) {
-        if (clientRequestDTO.getFirstName().isEmpty()) {
+    public ResponseEntity<Object> register(
+            @RequestParam String firstName, @RequestParam String lastName,
+            @RequestParam String email, @RequestParam String password
+           // @RequestBody ClientRequestDTO clientRequestDTO
+    ) {
+        if (firstName.isEmpty()) {
             return new ResponseEntity<>("Missing data in firstName", HttpStatus.FORBIDDEN);
            //"Missing data", HttpStatus.FORBIDDEN
         }
-        if ( clientRequestDTO.getLastName().isEmpty()) {
+        if (lastName.isEmpty()) {
             return new ResponseEntity<>("Missing data in lastName", HttpStatus.FORBIDDEN);
             //"Missing data", HttpStatus.FORBIDDEN
         }
-        if ( clientRequestDTO.getEmail().isEmpty() ) {
+        if ( email.isEmpty() ) {
             return new ResponseEntity<>("Missing data in email", HttpStatus.FORBIDDEN);
             //"Missing data", HttpStatus.FORBIDDEN
         }
-        if ( clientRequestDTO.getPassword().isEmpty()) {
+        if (password.isEmpty()) {
             return new ResponseEntity<>("Missing data in password", HttpStatus.FORBIDDEN);
             //"Missing data", HttpStatus.FORBIDDEN
         }
-        if (this.clientService.findByEmail(clientRequestDTO.getEmail()) !=  null) {
+        if (this.clientService.findByEmail(email) !=  null) {
             return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
         }
-        Client client = new Client(clientRequestDTO.getFirstName(), clientRequestDTO.getLastName(), clientRequestDTO.getEmail(), passwordEncoder.encode(clientRequestDTO.getPassword()), RoleType.CLIENT);
-        this.clientService.saveClient( client);
+        Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password), RoleType.CLIENT);
+        this.clientService.saveClient(client);
         Account account = new Account("VIN-"+ Util.randomNumber(999999999), LocalDate.now(),0);
         client.addAccount(account);
-      this.accountService.saveAccount(account);
+        this.accountService.saveAccount(account);
         return new ResponseEntity<>(client, HttpStatus.CREATED);
     }
     @GetMapping("/clients/current")
