@@ -23,14 +23,17 @@ public class CardController {
     @Autowired
     private CardService cardService;
     @PostMapping(value = "/clients/current/cards")
-    public ResponseEntity<Object> getCurrentClient(Authentication authentication, @RequestBody CardRequestDTO cardRequestDTO) {
+    public ResponseEntity<Object> getCurrentClient(Authentication authentication,
+                                                 @RequestParam CardType cardType ,
+                                                 @RequestParam CardColor cardColor
+                                                 /*  @RequestBody CardRequestDTO cardRequestDTO*/) {
         String email = authentication.getName();
         Client client = this.clientService.findByEmail(email);
-        if (Util.existTypeCards(client.getCards(),cardRequestDTO.getColor(),cardRequestDTO.getType())) {
-            return new ResponseEntity<>("You have " +cardRequestDTO.getColor() + " " + cardRequestDTO.getType() , HttpStatus.FORBIDDEN);
+        if (Util.existTypeCards(client.getCards(),cardColor, cardType)) {
+            return new ResponseEntity<>("You have " +cardColor + " " +cardType , HttpStatus.FORBIDDEN);
         }
         String cardNumber = Util.randomNumber(9999)+ " " + Util.randomNumber(9999)+ " " + Util.randomNumber(9999)+ " " + Util.randomNumber(9999);
-        Card card = new Card(client.getFirstName() + " " + client.getLastName(),cardRequestDTO.getType(),cardRequestDTO.getColor(),cardNumber, Util.randomNumber(999),LocalDate.now() , LocalDate.now().plusYears(5));
+        Card card = new Card(client.getFirstName() + " " + client.getLastName(),cardType,cardColor,cardNumber, Util.randomNumber(999),LocalDate.now() , LocalDate.now().plusYears(5));
         client.addCard(card);
        this.cardService.saveCard(card);
         return new ResponseEntity<>("Card Created ", HttpStatus.CREATED);

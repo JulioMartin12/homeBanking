@@ -15,9 +15,9 @@ public class CardDTO {
 
     private  String cardHolder;
 
-    private CardType type;
+    private CardType cardType;
 
-    private CardColor color;
+    private CardColor cardColor;
 
     private String number;
 
@@ -33,8 +33,8 @@ public class CardDTO {
     public CardDTO(Card card) {
         this.id = card.getId();
         this.cardHolder = card.getCardHolder();
-        this.type = card.getType();
-        this.color = card.getColor();
+        this.cardType = card.getType();
+        this.cardColor = card.getColor();
         this.number = card.getNumber();
         this.cvv = card.getCvv();
         this.thruDate = card.getThruDate();
@@ -50,11 +50,11 @@ public class CardDTO {
     }
 
     public CardType getType() {
-        return type;
+        return cardType;
     }
 
     public CardColor getColor() {
-        return color;
+        return cardColor;
     }
 
     public String getNumber() {

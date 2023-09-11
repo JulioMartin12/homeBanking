@@ -66,7 +66,7 @@ public class ClientController {
             return new ResponseEntity<>("Missing data in password", HttpStatus.FORBIDDEN);
             //"Missing data", HttpStatus.FORBIDDEN
         }
-        if (this.clientService.findByEmail(email) !=  null) {
+         if (this.clientService.findByEmail(email) !=  null) {
             return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
         }
         Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password), RoleType.CLIENT);
@@ -74,7 +74,7 @@ public class ClientController {
         Account account = new Account("VIN-"+ Util.randomNumber(999999999), LocalDate.now(),0);
         client.addAccount(account);
         this.accountService.saveAccount(account);
-        return new ResponseEntity<>(client, HttpStatus.CREATED);
+        return new ResponseEntity<>("Client created", HttpStatus.CREATED);
     }
     @GetMapping("/clients/current")
     public ResponseEntity<ClientDTO> getCurrentClient(Authentication authentication) {

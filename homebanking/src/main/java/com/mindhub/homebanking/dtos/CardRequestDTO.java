@@ -4,15 +4,15 @@ import com.mindhub.homebanking.models.CardColor;
 import com.mindhub.homebanking.models.CardType;
 
 public class CardRequestDTO {
-    private CardType type;
+    private CardType cardType;
 
-    private CardColor color;
+    private CardColor cardColor;
 
     public CardType getType() {
-        return type;
+        return cardType;
     }
 
     public CardColor getColor() {
-        return color;
+        return cardColor;
     }
 }

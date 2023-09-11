@@ -33,11 +33,15 @@ public class ClientServiceImplement implements ClientService {
 
     @Override
     public Client findByEmail(String email) {
-        return this.clientRepository.findByEmail(email);
+        Client client = this.clientRepository.findByEmail(email);
+        System.out.println(client);
+        return client;
     }
 
     @Override
     public void saveClient(Client client) {
+        this.clientRepository.save(client);
+
 
     }
 
