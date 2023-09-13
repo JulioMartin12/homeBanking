@@ -33,8 +33,9 @@
     display: inline;
 }
 
-#create {
+.btnCard {
     margin-bottom: 15px;
+    margin-left:5px;
 }
 
 .credit-transaction {
@@ -76,3 +77,7 @@
 .rounded-5 {
     border-radius: 10px;
 }
+
+/*#cardNumber {
+width:100px;
+}*/

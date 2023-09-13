@@ -15,4 +15,11 @@ public class CardServiceImplement implements CardService {
     public void saveCard(Card card) {
         this.cardRepository.save(card);
     }
+
+    @Override
+    public Card getCard(String number) {
+        return this.cardRepository.findByNumber(number);
+    }
+
+
 }

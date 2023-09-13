@@ -1,6 +1,7 @@
 package com.mindhub.homebanking.services;
 
 import com.mindhub.homebanking.dtos.AccountDTO;
+import com.mindhub.homebanking.dtos.CardDTO;
 import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.Client;
 import org.springframework.http.ResponseEntity;
@@ -14,5 +15,6 @@ public interface ClientService {
     void saveClient(Client client);
 
     List<AccountDTO> getClientAccounts(Long id);
+    List<CardDTO> getClientCards(Long id);
 
 }

@@ -14,7 +14,7 @@ public final class Util {
 
         for (Card card:cards
              ) {
-            if(cardType.equals(card.getType()) && cardColor.equals(card.getColor())){
+            if(cardType.equals(card.getType()) && cardColor.equals(card.getColor()) && card.isActiveCard()){
                 return true;
             }
         }

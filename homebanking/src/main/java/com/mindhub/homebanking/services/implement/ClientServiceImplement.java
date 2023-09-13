@@ -1,6 +1,7 @@
 package com.mindhub.homebanking.services.implement;
 
 import com.mindhub.homebanking.dtos.AccountDTO;
+import com.mindhub.homebanking.dtos.CardDTO;
 import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.ClientRepository;
@@ -52,6 +53,19 @@ public class ClientServiceImplement implements ClientService {
                         .map(AccountDTO::new)
                         .collect(Collectors.toList()))
                 .orElse(null);  // Si no se encuentra el cliente, retorna null
+    }
+
+    @Override
+    public List<CardDTO> getClientCards(Long id) {
+       List<CardDTO> listCardDTO = this.clientRepository.findById(id)
+                .map(client -> client.getCards().stream()
+                        .map(CardDTO::new)
+                        .collect(Collectors.toList()))
+                .orElse(null);
+
+       listCardDTO = listCardDTO.stream().filter( card -> (card.isActiveCard())).collect(Collectors.toList());
+        return listCardDTO;
+        // Si no se encuentra el cliente, retorna null;
     }
 
 }

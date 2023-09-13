@@ -2,6 +2,7 @@ package com.mindhub.homebanking;
 
 import com.mindhub.homebanking.repositories.*;
 import com.mindhub.homebanking.models.*;
+import com.mindhub.homebanking.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,8 +17,9 @@ import java.util.List;
 
 @SpringBootApplication
 public class HomebankingApplication {
-//	@Autowired
- //private PasswordEncoder passwordEncoder;
+
+@Autowired
+ private PasswordEncoder passwordEncoder;
 	public static void main(String[] args) {
 		SpringApplication.run(HomebankingApplication.class, args);
 	}
@@ -38,10 +40,9 @@ public class HomebankingApplication {
 			// melba and martin are clients and admin
 
 		/*	Client admin = new Client("admin", "admin", "admin@gmail.com",passwordEncoder.encode("12345"));
-			clientRepository.save(admin);
-*/
+			clientRepository.save(admin);*/
 
-		/*	Client melba = new Client("Melba", "Morel", "melba@mindHub.com", passwordEncoder.encode("12345"), RoleType.CLIENT);
+			Client melba = new Client("Melba", "Morel", "melba@mindHub.com", passwordEncoder.encode("12345"), RoleType.CLIENT);
 			clientRepository.save(melba);
 
 			Account account = new Account("VIN001", LocalDate.now(),5000);
@@ -111,34 +112,34 @@ public class HomebankingApplication {
 			clientLoanRepository.save(clientLoan3);
 
 			Card cardMelba = new Card(melba.getFirstName()  + " " + melba.getLastName(),
-					CardType.DEBIT,CardColor.GOLD,"1234 4256 3524 7845", 278,
-					LocalDate.now(),LocalDate.now().plusYears(5));
+					CardType.DEBIT,CardColor.GOLD,Util.randomNumber(9999) + " " + Util.randomNumber(9999) + " " + Util.randomNumber(9999) + " "+ Util.randomNumber(9999), 278,
+					LocalDate.now(),LocalDate.now().plusYears(5),true);
 			melba.addCard(cardMelba);
 			cardRepository.save(cardMelba);
 
 			Card cardMelba3 = new Card(melba.getFirstName()  + " " + melba.getLastName(),
-					CardType.DEBIT,CardColor.SILVER,"9587 6452 1245 3265", 524,
-					LocalDate.now(),LocalDate.now().plusYears(5));
+					CardType.DEBIT,CardColor.SILVER,Util.randomNumber(9999) + " " + Util.randomNumber(9999) + " " + Util.randomNumber(9999) + " "+ Util.randomNumber(9999), 524,
+					LocalDate.now(),LocalDate.now().plusYears(5),true);
 			melba.addCard(cardMelba3);
 			cardRepository.save(cardMelba3);
 
 			Card cardMelba4 = new Card(melba.getFirstName()  + " " + melba.getLastName(),
-					CardType.CREDIT,CardColor.SILVER,"5824 6549 6524 2125 ", 235,
-					LocalDate.now(),LocalDate.now().plusYears(5));
+					CardType.CREDIT,CardColor.SILVER,Util.randomNumber(9999) + " " + Util.randomNumber(9999) + " " + Util.randomNumber(9999) + " "+ Util.randomNumber(9999), 235,
+					LocalDate.now(),LocalDate.now().plusYears(5),true);
 			melba.addCard(cardMelba4);
 			cardRepository.save(cardMelba4);
 
 			Card cardMelba2 = new Card(melba.getFirstName()  + " " + melba.getLastName(),
-					CardType.CREDIT,CardColor.TITANIUM,"4256 7845 1234 3524 ", 872,
-					LocalDate.now(),LocalDate.now().plusYears(5));
+					CardType.CREDIT,CardColor.TITANIUM,Util.randomNumber(9999) + " " + Util.randomNumber(9999) + " " + Util.randomNumber(9999) + " "+ Util.randomNumber(9999), 872,
+					LocalDate.now(),LocalDate.now().plusYears(5),true);
 			melba.addCard(cardMelba2);
 			cardRepository.save(cardMelba2);
 
 
 
 			Card cardMartin = new Card(martin.getFirstName()  + " " + martin.getLastName(),
-					CardType.CREDIT,CardColor.TITANIUM,"1234 3214 789 987 ", 777,
-					LocalDate.now(),LocalDate.now().plusYears(5));
+					CardType.CREDIT,CardColor.TITANIUM, Util.randomNumber(9999) + " " + Util.randomNumber(9999) + " " + Util.randomNumber(9999) + " "+ Util.randomNumber(9999), 777,
+					LocalDate.now(),LocalDate.now().plusYears(5),true);
 			martin.addCard(cardMartin);
 			cardRepository.save(cardMartin);
 
@@ -149,7 +150,7 @@ public class HomebankingApplication {
 			Client Josesito = new Client("Josesito", "Lopez", "Jose@yahoo.com.ar",passwordEncoder.encode("12345"),RoleType.CLIENT);
 			clientRepository.save(martin);
 
-*/		});
+		});
 	}
 
 }
