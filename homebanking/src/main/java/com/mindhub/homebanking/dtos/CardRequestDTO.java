@@ -8,6 +8,9 @@ public class CardRequestDTO {
 
     private CardColor cardColor;
 
+    public CardRequestDTO() {
+    }
+
     public CardType getType() {
         return cardType;
     }

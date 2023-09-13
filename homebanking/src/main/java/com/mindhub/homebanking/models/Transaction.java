@@ -1,6 +1,5 @@
 package com.mindhub.homebanking.models;
 
-import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -51,7 +50,7 @@ public class Transaction {
         this.description = description;
     }
 
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
