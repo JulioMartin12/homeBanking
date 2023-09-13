@@ -5,8 +5,6 @@ import com.mindhub.homebanking.dtos.ClientRequestDTO;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.models.RoleType;
-import com.mindhub.homebanking.repositories.AccountRepository;
-import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.services.AccountService;
 import com.mindhub.homebanking.services.ClientService;
@@ -33,7 +31,6 @@ public class ClientController {
     private PasswordEncoder passwordEncoder;
     @GetMapping(value = "/clients")
     public List<ClientDTO> getClients(){
-
         return  this.clientService.getAllClients();
     }
     @GetMapping("/clients/{id}")
@@ -46,30 +43,30 @@ public class ClientController {
     }
     @PostMapping(path = "/clients")
     public ResponseEntity<Object> register(
-            @RequestParam String firstName, @RequestParam String lastName,
-            @RequestParam String email, @RequestParam String password
-           // @RequestBody ClientRequestDTO clientRequestDTO
+         /*   @RequestParam String firstName, @RequestParam String lastName,
+            @RequestParam String email, @RequestParam String password*/
+           @RequestBody ClientRequestDTO clientRequestDTO
     ) {
-        if (firstName.isEmpty()) {
+        if (clientRequestDTO.getFirstName().isEmpty()) {
             return new ResponseEntity<>("Missing data in firstName", HttpStatus.FORBIDDEN);
            //"Missing data", HttpStatus.FORBIDDEN
         }
-        if (lastName.isEmpty()) {
+        if (clientRequestDTO.getLastName().isEmpty()) {
             return new ResponseEntity<>("Missing data in lastName", HttpStatus.FORBIDDEN);
             //"Missing data", HttpStatus.FORBIDDEN
         }
-        if ( email.isEmpty() ) {
+        if ( clientRequestDTO.getEmail().isEmpty() ) {
             return new ResponseEntity<>("Missing data in email", HttpStatus.FORBIDDEN);
             //"Missing data", HttpStatus.FORBIDDEN
         }
-        if (password.isEmpty()) {
+        if (clientRequestDTO.getPassword().isEmpty()) {
             return new ResponseEntity<>("Missing data in password", HttpStatus.FORBIDDEN);
             //"Missing data", HttpStatus.FORBIDDEN
         }
-         if (this.clientService.findByEmail(email) !=  null) {
+         if (this.clientService.findByEmail(clientRequestDTO.getEmail()) !=  null) {
             return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
         }
-        Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password), RoleType.CLIENT);
+        Client client = new Client(clientRequestDTO.getFirstName(), clientRequestDTO.getLastName(),clientRequestDTO.getEmail(), passwordEncoder.encode(clientRequestDTO.getPassword()), RoleType.CLIENT);
         this.clientService.saveClient(client);
         Account account = new Account("VIN-"+ Util.randomNumber(999999999), LocalDate.now(),0);
         client.addAccount(account);

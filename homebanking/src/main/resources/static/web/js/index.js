@@ -32,7 +32,7 @@ Vue.createApp({
                     'content-type': 'application/x-www-form-urlencoded'
                 }
             }
-            axios.post('/api/clients', `firstName=${this.firstName}&lastName=${this.lastName}&email=${this.email}&password=${this.password}`, config)
+            axios.post('/api/clients',{ firstName: this.firstName, lastName: this.lastName, email: this.email, password: this.password})
                 .then(() => { this.signIn(event) })
                 .catch(() => {
                     this.errorMsg = "Sign up failed, check the information"

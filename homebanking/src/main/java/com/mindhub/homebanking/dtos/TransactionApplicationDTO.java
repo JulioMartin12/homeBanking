@@ -11,12 +11,15 @@ public class TransactionApplicationDTO {
     public String getFromAccountNumber() {
         return fromAccountNumber;
     }
+
     public String getToAccountNumber() {
         return toAccountNumber;
     }
+
     public Double getAmount() {
         return amount;
     }
+
     public String getDescription() {
         return description;
     }

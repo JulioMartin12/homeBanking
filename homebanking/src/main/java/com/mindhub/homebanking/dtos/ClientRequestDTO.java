@@ -9,6 +9,10 @@ public class ClientRequestDTO {
     private String lastName;
     private String email;
     private String password;
+
+    public ClientRequestDTO() {
+    }
+
     public String getFirstName() {
         return firstName;
     }

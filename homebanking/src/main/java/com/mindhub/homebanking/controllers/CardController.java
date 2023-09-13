@@ -2,8 +2,6 @@ package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.dtos.CardRequestDTO;
 import com.mindhub.homebanking.models.*;
-import com.mindhub.homebanking.repositories.CardRepository;
-import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.services.CardService;
 import com.mindhub.homebanking.services.ClientService;
 import com.mindhub.homebanking.utils.Util;
@@ -23,17 +21,14 @@ public class CardController {
     @Autowired
     private CardService cardService;
     @PostMapping(value = "/clients/current/cards")
-    public ResponseEntity<Object> getCurrentClient(Authentication authentication,
-                                               /*  @RequestParam CardType cardType ,
-                                                 @RequestParam CardColor cardColor*/
-                                                 @RequestBody CardRequestDTO cardRequestDTO) {
+    public ResponseEntity<Object> getCurrentClient(@RequestBody CardRequestDTO cardRequestDTO, Authentication authentication) {
         String email = authentication.getName();
         Client client = this.clientService.findByEmail(email);
-        if (Util.existTypeCards(client.getCards(),cardRequestDTO.getColor(), cardRequestDTO.getType())) {
-            return new ResponseEntity<>("You have " +cardRequestDTO.getColor() + " " +cardRequestDTO.getType() , HttpStatus.FORBIDDEN);
+        if (Util.existTypeCards(client.getCards(),cardRequestDTO.getCardColor(), cardRequestDTO.getCardType())) {
+            return new ResponseEntity<>("You have " +cardRequestDTO.getCardColor() + " " +cardRequestDTO.getCardType() , HttpStatus.FORBIDDEN);
         }
         String cardNumber = Util.randomNumber(9999)+ " " + Util.randomNumber(9999)+ " " + Util.randomNumber(9999)+ " " + Util.randomNumber(9999);
-        Card card = new Card(client.getFirstName() + " " + client.getLastName(),cardRequestDTO.getType(),cardRequestDTO.getColor(),cardNumber, Util.randomNumber(999),LocalDate.now() , LocalDate.now().plusYears(5));
+        Card card = new Card(client.getFirstName() + " " + client.getLastName(),cardRequestDTO.getCardType(),cardRequestDTO.getCardColor(),cardNumber, Util.randomNumber(999),LocalDate.now() , LocalDate.now().plusYears(5));
         client.addCard(card);
        this.cardService.saveCard(card);
         return new ResponseEntity<>("Card Created ", HttpStatus.CREATED);
