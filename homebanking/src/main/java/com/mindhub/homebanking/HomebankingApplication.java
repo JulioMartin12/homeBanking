@@ -18,8 +18,8 @@ import java.util.List;
 @SpringBootApplication
 public class HomebankingApplication {
 
-@Autowired
- private PasswordEncoder passwordEncoder;
+/*@Autowired
+ private PasswordEncoder passwordEncoder;*/
 	public static void main(String[] args) {
 		SpringApplication.run(HomebankingApplication.class, args);
 	}
@@ -42,7 +42,7 @@ public class HomebankingApplication {
 		/*	Client admin = new Client("admin", "admin", "admin@gmail.com",passwordEncoder.encode("12345"));
 			clientRepository.save(admin);*/
 
-			Client melba = new Client("Melba", "Morel", "melba@mindHub.com", passwordEncoder.encode("12345"), RoleType.CLIENT);
+		/*	Client melba = new Client("Melba", "Morel", "melba@mindHub.com", passwordEncoder.encode("12345"), RoleType.CLIENT);
 			clientRepository.save(melba);
 
 			Account account = new Account("VIN001", LocalDate.now(),5000);
@@ -149,7 +149,7 @@ public class HomebankingApplication {
 
 			Client Josesito = new Client("Josesito", "Lopez", "Jose@yahoo.com.ar",passwordEncoder.encode("12345"),RoleType.CLIENT);
 			clientRepository.save(martin);
-
+*/
 		});
 	}
 

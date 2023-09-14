@@ -27,7 +27,7 @@ class ClientRepositoryTest {
     }
 
     @Test
-    public void existPersonalLoan() {
+    public void existPersonalAccount() {
         List<Client> clients = clientRepository.findAll();
         for (Client client :clients) {
            if(client.getRole().compareTo(RoleType.ADMIN)!=0){

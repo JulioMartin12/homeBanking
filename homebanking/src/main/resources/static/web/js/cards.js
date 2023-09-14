@@ -6,6 +6,7 @@ Vue.createApp({
             debitCards: [],
             errorToats: null,
             errorMsg: null,
+           fechaActual: new Date(),
         }
     },
     methods: {
@@ -34,6 +35,7 @@ Vue.createApp({
                 })
         },
     },
+
     mounted: function () {
         this.errorToats = new bootstrap.Toast(document.getElementById('danger-toast'));
         this.getData();

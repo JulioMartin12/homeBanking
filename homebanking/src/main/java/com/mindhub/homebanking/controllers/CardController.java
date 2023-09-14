@@ -31,7 +31,7 @@ public class CardController {
             return new ResponseEntity<>("You have " +cardRequestDTO.getCardColor() + " " +cardRequestDTO.getCardType() , HttpStatus.FORBIDDEN);
         }
         String cardNumber = Util.randomNumber(9999)+ " " + Util.randomNumber(9999)+ " " + Util.randomNumber(9999)+ " " + Util.randomNumber(9999);
-        Card card = new Card(client.getFirstName() + " " + client.getLastName(),cardRequestDTO.getCardType(),cardRequestDTO.getCardColor(),cardNumber, Util.randomNumber(999),LocalDate.now() , LocalDate.now().plusYears(5),true);
+        Card card = new Card(client.getFirstName() + " " + client.getLastName(),cardRequestDTO.getCardType(),cardRequestDTO.getCardColor(),cardNumber, Util.randomNumber(999),LocalDate.now().plusYears(10) , LocalDate.now(),true);
         client.addCard(card);
        this.cardService.saveCard(card);
         return new ResponseEntity<>("Card Created ", HttpStatus.CREATED);

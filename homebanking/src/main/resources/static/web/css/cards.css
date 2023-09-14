@@ -166,3 +166,11 @@
 	-webkit-transform: rotateY(0deg);
 	-moz-transform: rotateY(0deg);
 }
+
+.expired-card {
+    color: red;
+}
+
+.red-text {
+    color: red;
+}

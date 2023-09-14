@@ -106,7 +106,12 @@
                                 </div>
                                 <div class="plastic-card__space-25">
                                     <span class="plastic-card__label">Expires</span>
-                                    <p class="plastic-card__info">{{ formatDate(card.thruDate) }}</p>
+                                    <p v-if="card.thruDate < fechaActual " class="plastic-card__info" style="color: red">
+                                        {{ formatDate(card.thruDate) }}
+                                    </p>
+                                    <p v-else class="plastic-card__info" >
+                                        {{  formatDate(card.thruDate) }}
+                                    </p>
                                 </div>
                             </div>
 
@@ -146,7 +151,12 @@
                                 </div>
                                 <div class="plastic-card__space-25">
                                     <span class="plastic-card__label">Expires</span>
-                                    <p class="plastic-card__info">{{ formatDate(card.thruDate) }}</p>
+                                    <p v-if=" fechaActual < card.thruDate " class="plastic-card__info" >
+                                        {{ formatDate(card.thruDate) }}
+                                    </p>
+                                    <p v-else class="plastic-card__info "  style="color: red"  >
+                                        {{  formatDate(card.thruDate) }}
+                                    </p>
                                 </div>
                             </div>
 
