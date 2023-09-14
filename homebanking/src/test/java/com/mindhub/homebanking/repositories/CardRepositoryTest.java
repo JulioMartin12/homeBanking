@@ -1,7 +1,6 @@
 package com.mindhub.homebanking.repositories;
 
-import com.mindhub.homebanking.models.Card;
-import com.mindhub.homebanking.models.Transaction;
+import com.mindhub.homebanking.models.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -23,6 +22,15 @@ class CardRepositoryTest {
     public void exisCards(){
         List<Card> cards = cardRepository.findAll();
         assertThat(cards,is(not(empty())));
+    }
+    @Test
+    public void existTypeCard() {
+        List<Card> cards = cardRepository.findAll();
+       for (Card card :cards) {
+           assertEquals(3, (String.valueOf(card.getCvv())).length());
+            }
+
+
     }
 
 }
